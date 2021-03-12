@@ -91,51 +91,39 @@
               </div><!--grey box -->
             </div><!--/span3-->
           </div>
+
+
+          <?php
+        $host = "localhost";  
+        $username = "root";  
+        $password = "";  
+        $database = "admin_aqua";  
+        $message = "";  
+       
+       
+           $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
+         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+         $stmnt=$conn->prepare("SELECT * FROM `articles` WHERE opmiddle= '1'");
+         $stmnt->execute();
+         $details=$stmnt->fetchAll();
+        foreach($details as $detail){
+          
+        
+        ?>
+          <div class="col-md-3">
+              <div class="grey-box-icon">
+                <div class="icon-box-top grey-box-icon-pos">
+                  <img src="1x/schedule.png" alt="" />
+                </div><!--icon box top -->
+                <h4><?php echo $detail['titre'];?></h4>
+                <p><?php          echo $detail['description'];?></p>
+                   <p><a href="#"><em>Read More</em></a></p>
+              </div><!--grey box -->
+            </div><!--/span3-->
+     
+      <?php }?>
       </div>
-      <div class="container">
-        <div class="row">
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/schedule.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Global schedule</h4>
-                  <p>here you van find the global schedule of the school you can check it when click on the link below</p>
-                     <p><a href="#"><em>Read More</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/teacher.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Our teachers</h4>
-                  <p>here you find the list of our teachers with their reception day and time check it when click on the link below</p>
-                     <p><a href="#"><em>Read More</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/show.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Pratical information</h4>
-                  <p>here you find all the pratical information relative to our school check it when click on the link below</p>
-                     <p><a href="#"><em>Read More</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/food.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Restaurants</h4>
-                  <p>here you find all the meal schedue we offer in our school you can just check it when click on the link below.</p>
-                     <p><a href="#"><em>Read More →</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-            </div>
-        </div>
       
       </section>
       <hr>
@@ -143,67 +131,7 @@
 
     <!-- container -->
     <section class="container">
-    <div class="row">
-            <!-- main content -->
-            <section class="col-sm-8 maincontent">
-                <h3>Teachers:</h3>
-              
-               
-                
-            </section>
-            <!-- /main -->
-
-           
-
-        </div>
-        <table class="table">
-                <thead>
-                  <tr>
-                    <th>name</th>
-                    <th>familyname</th>
-                    <th>Reception day</th>
-                    <th>Start reception</th>
-                    <th>End of reception</th>
-                    <th>E-mail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 
-                  <?php
-                        $host = "localhost";  
-                         $username = "root";  
-                        $password = "";  
-                        $database = "admin_aqua";  
-                          $message = "";  
-        
-        
-                               $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
-                               $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-         
-                            
-                                    $stmnt2=$conn->prepare("SELECT * FROM teachers ");
-                                    $stmnt2->execute();
-                                    $details2=$stmnt2->fetchAll();
-                                    foreach($details2 as $detail2){
-         
-                              ?>
-                       <tr>          
-                    <td><?php          echo $detail2['name'];?></td>
-                    <td><?php          echo $detail2['family_name'];?></td>
-                    <td><?php          echo $detail2['recep_day'];?></td>
-                    <td><?php          echo $detail2['start_recep'];?></td>
-                    <td><?php          echo $detail2['end_recep'];?></td>
-                    <td><?php          echo $detail2['email'];?></td>
-                  
-                             
-                              
-                    
-                  </tr>
-                  <?php }?>
-                 
-                </tbody>
-                
-              </table>
+   
               <div class="row">
         <div class="row">
             <!-- main content -->

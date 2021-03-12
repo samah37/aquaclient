@@ -1,3 +1,15 @@
+<?php  
+  
+ session_start();  
+ if(isset($_SESSION["email"]))  
+ {  
+      echo 'Login Success, Welcome to parent space';  
+       
+ }  
+ else  
+ {  
+      header("location:Student.php");  
+ }  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +22,10 @@
     <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <!-- Custom styles for our template -->
+   
     <link rel="stylesheet" href="assets/css/bootstrap-theme.css" media="screen">
     <link rel="stylesheet" href="assets/css/style.css">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-	<script src="assets/js/html5shiv.js"></script>
-	<script src="assets/js/respond.min.js"></script>
-	<![endif]-->
+   
 </head>
 
 <body>
@@ -104,7 +112,7 @@
            $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
          $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-         $stmnt=$conn->prepare("SELECT * FROM `articles` WHERE optous ='1' and opsecondary= '1'");
+         $stmnt=$conn->prepare("SELECT * FROM `articles` WHERE optous ='1' and opparent= '1'");
          $stmnt->execute();
          $details=$stmnt->fetchAll();
         foreach($details as $detail){
@@ -126,13 +134,230 @@
       </div>
       
       </section>
+      
       <hr>
-
+      <section id="main-content">
+      <h3>Profil infornation</h3>
+      <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Family name</th>
+                    <th>Email</th>
+                    <th>Adress</th>
+                    <th>Phone1</th>
+                    <th>Phone2</th>
+                    <th>Phone3</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                 
+                  <?php
+                        $host = "localhost";  
+                         $username = "root";  
+                        $password = "";  
+                        $database = "admin_aqua";  
+                          $message = "";  
+        
+        
+                               $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
+                               $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                               $mail= $_SESSION["email"];
+                               
+         
+                               $stmnt=$conn->prepare("SELECT * FROM parents WHERE email= '$mail'");
+                              $stmnt->execute();
+                             
+                              
+                              
+                              $details=$stmnt->fetchAll();
+                              foreach($details as $detail){
+                                 
+         
+                              ?>
+                       <tr>          
+                    <td><?php          echo $detail['name'];?></td>
+                    <td><?php          echo $detail['family_name'];?></td>
+                    <td><?php          echo $detail['email'];?></td>
+                    <td><?php          echo $detail['adresse'];?></td>
+                    <td><?php          echo $detail['phone1'];?></td>
+                    <td><?php          echo $detail['phone2'];?></td>
+                    <td><?php          echo $detail['phone3'];?></td>
+                   
+                              
+                    
+                  </tr>
+                  <?php }?>
+                 
+                </tbody>
+              </table>
+      <section id="main-content">
+      <h3>Son Information</h3>
+      <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Family name</th>
+                    <th>Email</th>
+                    <th>Class</th>
+                    <th>Level</th>
+                    <th>Tutor name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 
+                  <?php
+                        $host = "localhost";  
+                         $username = "root";  
+                        $password = "";  
+                        $database = "admin_aqua";  
+                          $message = "";  
+        
+        
+                               $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
+                               $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                               $mail= $_SESSION["email"];
+                               $stmnt4=$conn->prepare("SELECT * FROM parents WHERE email= '$mail'");
+                              $stmnt4->execute();
+                              $idp=$stmnt4->fetchColumn(0);
+                               
+         
+                               $stmnt=$conn->prepare("SELECT * FROM students WHERE id_tutor= '$idp'");
+                              $stmnt->execute();
+                             
+                              
+                              
+                              $details=$stmnt->fetchAll();
+                              foreach($details as $detail){
+                                  $classes= $detail['id_class'];
+                                  $stmnt2=$conn->prepare("SELECT * FROM classes WHERE id_class= '$classes'");
+                              $stmnt2->execute();
+                              $details1=$stmnt2->fetchAll();
+                              foreach($details1 as $detail1){
+                                  $class= $detail1['name_class'];
+                                  $level=$detail1['id_level'];
+                              }
+                              $idp=$detail['id_tutor'];
+                              $stmnt3=$conn->prepare("SELECT * FROM parents WHERE id_parent= '$idp'");
+                              $stmnt3->execute();
+                              $details2=$stmnt3->fetchAll();
+                              foreach($details2 as $detail2){
+                                  $nametutor= $detail2['name'];
+                                 
+                              }
+         
+                              ?>
+                       <tr>          
+                    <td><?php          echo $detail['name'];?></td>
+                    <td><?php          echo $detail['family_name'];?></td>
+                    <td><?php          echo $detail['email'];?></td>
+                    <td><?php          echo $class;?></td>
+                    <td><?php          echo $level;?></td>
+                    
+                    <td><?php          echo $nametutor;?></td>
+                             
+                              
+                    
+                  </tr>
+                  <?php }?>
+                 
+                </tbody>
+              </table>
+      
+      <div class="row">
+           
+            
+        <?php
+                            $host = "localhost";  
+                             $username = "root";  
+                            $password = "";  
+                            $database = "admin_aqua";  
+                              $message = ""; 
+                              $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
+                              $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                              $mail= $_SESSION["email"];
+        
+                              $stmnt3=$conn->prepare("SELECT * FROM students WHERE email= '$mail'");
+                             $stmnt3->execute(); 
+                             $classStudent= $stmnt3->fetchColumn(6);
+                            
+                             echo $classStudent;
+            
+            
+                                   $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
+                                   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+             
+                                   $stmnt2=$conn->prepare("SELECT * FROM classes WHERE id_class= '$classStudent'");
+                                  $stmnt2->execute();
+                                  $details2=$stmnt2->fetchAll();
+    
+                                  foreach($details2 as $detail2){
+                                    $group=$detail2['id_class'];
+                                    ?>
+                                    <section class="wrapper">
+          <h3><i class="fa fa-angle-right"></i> Schedule Group:<?php          echo $detail2['name_class']; echo " -- "; echo $detail2['id_level']; ?> </h3>
+                                    
+           <div class="col-md-12">
+          <div class="content-panel" id="globalS">
+                  
+                  
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Day</th>
+                        <th>Session1</th>
+                        <th>Session2</th>
+                        <th>Session3</th>
+                        <th>Session4</th>
+                        <th>Session5</th>
+                        <th>Session6</th>
+                        <th>Session7</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                      <?php
+                           
+             
+                                   $stmnt=$conn->prepare("SELECT * FROM meals ");
+                                  $stmnt->execute();
+                                  $details=$stmnt->fetchAll();
+    
+                                  foreach($details as $detail){
+                                    $day= $detail['day'];?>
+                                     <tr>
+                                     <td><?php          echo $detail['day'];?></td>
+                                     <?php
+                                   $stmnt1=$conn->prepare("SELECT * FROM session WHERE day= '$day' AND id_class= '$group' ORDER BY h_start ");
+                                   $stmnt1->execute();
+                                   $details1=$stmnt1->fetchAll();
+                                   foreach($details1 as $detail1){
+             
+                                  ?>
+                                    
+                        <td><?php          echo $detail1['h_start']; echo " -- "; echo $detail1['h_end']; ?>
+                        <br></br><?php          echo "Class:"; echo $detail1['id_classrooms'];?></td>
+                        
+                                 
+                                  
+                        
+                     
+                      <?php }?>
+                      </tr>
+                      <?php }?>
+                     
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <?php }?>
+      </section>
+      </div>
 
     <!-- container -->
     <section class="container">
    
-              <div class="row">
         <div class="row">
             <!-- main content -->
             <section class="col-sm-8 maincontent">
@@ -170,7 +395,7 @@
                                $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
                                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
          
-                               $stmnt=$conn->prepare("SELECT * FROM classes where id_level= 3 ");
+                               $stmnt=$conn->prepare("SELECT * FROM classes where id_level= 2 ");
                               $stmnt->execute();
                               $details=$stmnt->fetchAll();//contient toute les classes de ce niveau
                               foreach($details as $detail){

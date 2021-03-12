@@ -1,38 +1,43 @@
 <?php  
+ include_once("Controllors/studentProfil.php");
  session_start();  
  $host = "localhost";  
  $username = "root";  
  $password = "";  
  $database = "admin_aqua";  
  $message = "";  
+ 
  try  
  {  
       $connect = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
       $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
       if(isset($_POST["login"]))  
       {  
-           if(empty($_POST["username"]) || empty($_POST["password"]))  
+           if(empty($_POST["email"]) || empty($_POST["password"]))  
            {  
                 $message = '<label>All fields are required</label>';  
            }  
            else  
-           {  
-                $query = "SELECT * FROM admin WHERE username = :username AND passwd = :password";  
+           {  echo "essaie";
+               echo $_POST["email"];
+               echo "this";
+               echo  $_POST["password"]  ;
+               $mail= $_POST["email"];
+               $pssw= $_POST["password"];
+                $query = "SELECT * FROM users WHERE email = '$mail' AND password = '$pssw'";  
                 $statement = $connect->prepare($query);  
-                $statement->execute(  
-                     array(  
-                          'username'     =>     $_POST["username"],  
-                          'password'     =>     $_POST["password"]  
-                     )  
-                );  
+                $statement->execute();  
                 $count = $statement->rowCount();  
+               
                 if($count > 0)  
-                {  
-                     $_SESSION["username"] = $_POST["username"];  
-                     header("location: secondary.php");  
+                {  echo "reussis";
+                     $_SESSION["email"] = $mail;  
+                     $_SESSION["id"]= $statement->fetchColumn(0);
+                     
+                     header("location: studentProfil.php");  
                 }  
                 else  
-                {  
+                {  echo "fechlen";
                      $message = '<label>Wrong Data</label>';  
                 }  
            }  
@@ -109,7 +114,7 @@
               <p></br></br>Please enter your credentials to login.</p>
             </div>
           <form class="login-form" method="post">
-            <input type="text" name="username" class="form-control" />
+            <input type="email" name="email" class="form-control" />
             
             <input type="password" name="password" class="form-control"/>
           
@@ -117,7 +122,7 @@
             <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
                       <button class="btn btn-theme" type="submit" name="login">Login</button>
-                      
+                     
                     </div>
                   </div>
             

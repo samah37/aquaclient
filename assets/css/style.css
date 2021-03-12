@@ -819,7 +819,9 @@ nav#filter a.current {
 	background: #3d84e6 !important;
 }
 .btn {
-	background: #3d84e6;
+	
+	background-image: linear-gradient(45deg,#0da18d,#08ac4b);
+
 	color: #fff;
 }
 .footer2 a {

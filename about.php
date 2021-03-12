@@ -97,55 +97,41 @@ License URL: http://creativecommons.org/licenses/by/3.0/
               </div><!--grey box -->
             </div><!--/span3-->
           </div>
+
+
+          <?php
+        $host = "localhost";  
+        $username = "root";  
+        $password = "";  
+        $database = "admin_aqua";  
+        $message = "";  
+       
+       
+           $conn = new PDO("mysql:host=$host; dbname=$database", $username, $password);  
+         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+         $stmnt=$conn->prepare("SELECT * FROM `articles` WHERE optous ='1'");
+         $stmnt->execute();
+         $details=$stmnt->fetchAll();
+        foreach($details as $detail){
+          
+        
+        ?>
+          <div class="col-md-3">
+              <div class="grey-box-icon">
+                <div class="icon-box-top grey-box-icon-pos">
+                  <img src="1x/schedule.png" alt="" />
+                </div><!--icon box top -->
+                <h4><?php echo $detail['titre'];?></h4>
+                <p><?php          echo $detail['description'];?></p>
+                   <p><a href="#"><em>Read More</em></a></p>
+              </div><!--grey box -->
+            </div><!--/span3-->
+     
+      <?php }?>
       </div>
-      <div class="container">
-        <div class="row">
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/schedule.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Global schedule</h4>
-                  <p>here you van find the global schedule of the school you can check it when click on the link below</p>
-                     <p><a href="#"><em>Read More</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/teacher.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Our teachers</h4>
-                  <p>here you find the list of our teachers with their reception day and time check it when click on the link below</p>
-                     <p><a href="#"><em>Read More</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/show.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Pratical information</h4>
-                  <p>here you find all the pratical information relative to our school check it when click on the link below</p>
-                     <p><a href="#"><em>Read More</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-              <div class="col-md-3">
-                <div class="grey-box-icon">
-                  <div class="icon-box-top grey-box-icon-pos">
-                    <img src="1x/food.png" alt="" />
-                  </div><!--icon box top -->
-                  <h4>Restaurants</h4>
-                  <p>here you find all the meal schedue we offer in our school you can just check it when click on the link below.</p>
-                     <p><a href="#"><em>Read More →</em></a></p>
-                </div><!--grey box -->
-              </div><!--/span3-->
-            </div>
-        </div>
       
       </section>
-      <hr>
-
 
     <!-- container -->
     <section class="container">
